@@ -1,0 +1,663 @@
+{
+  "validation_year": 2025,
+  "test_year": 2026,
+  "validation_draws": 52,
+  "test_draws": 41,
+  "bootstrap_samples": 1800,
+  "block_size": 4,
+  "selected_main": "win13_k100",
+  "selected_pb": "uniform",
+  "metrics": {
+    "brier": [
+      {
+        "key": "uniform",
+        "label": "Uniforme · referencia",
+        "family": "uniform",
+        "window_or_halflife": null,
+        "k": null,
+        "validation_score": 0.16000000000000003,
+        "test_score": 0.16000000000000003,
+        "gain_vs_uniform": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "simultaneous_ci95": [
+          0.0,
+          0.0
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k25",
+        "label": "Toda la historia · K=25",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 25,
+        "validation_score": 0.16044250217719289,
+        "test_score": 0.16002260036850494,
+        "gain_vs_uniform": -2.260036850489732e-05,
+        "ci95": [
+          -0.0005371893208215454,
+          0.0004850582952889358
+        ],
+        "simultaneous_ci95": [
+          -0.0006839196052152755,
+          0.000638718868205481
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k100",
+        "label": "Toda la historia · K=100",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 100,
+        "validation_score": 0.16033574220481647,
+        "test_score": 0.15998733924318242,
+        "gain_vs_uniform": 1.2660756817606933e-05,
+        "ci95": [
+          -0.0004273657922267291,
+          0.00044721493607724125
+        ],
+        "simultaneous_ci95": [
+          -0.0005535554521064389,
+          0.0005788769657416527
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k300",
+        "label": "Toda la historia · K=300",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 300,
+        "validation_score": 0.16019534405192146,
+        "test_score": 0.15995265313925608,
+        "gain_vs_uniform": 4.734686074394117e-05,
+        "ci95": [
+          -0.00026996998512293267,
+          0.00036154203650389503
+        ],
+        "simultaneous_ci95": [
+          -0.00036197014118000457,
+          0.0004566638626678869
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k25",
+        "label": "Ventana 13 · K=25",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 25,
+        "validation_score": 0.16080712915892967,
+        "test_score": 0.16186744138909528,
+        "gain_vs_uniform": -0.0018674413890952825,
+        "ci95": [
+          -0.003622704064397147,
+          -4.5870452768589086e-05
+        ],
+        "simultaneous_ci95": [
+          -0.004170928977685572,
+          0.0004360461994950076
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k100",
+        "label": "Ventana 13 · K=100",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 100,
+        "validation_score": 0.1599195854658303,
+        "test_score": 0.16029468145167564,
+        "gain_vs_uniform": -0.00029468145167559247,
+        "ci95": [
+          -0.000889179832581219,
+          0.0003437631917238782
+        ],
+        "simultaneous_ci95": [
+          -0.0010871397490022914,
+          0.0004977768456511066
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k300",
+        "label": "Ventana 13 · K=300",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 300,
+        "validation_score": 0.15992984549160483,
+        "test_score": 0.1600674294218718,
+        "gain_vs_uniform": -6.742942187174717e-05,
+        "ci95": [
+          -0.0002818992411842099,
+          0.0001655967188369893
+        ],
+        "simultaneous_ci95": [
+          -0.00035617175043042496,
+          0.00022131290668693065
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win26_k100",
+        "label": "Ventana 26 · K=100",
+        "family": "window",
+        "window_or_halflife": 26,
+        "k": 100,
+        "validation_score": 0.16020124370464503,
+        "test_score": 0.16012055099494954,
+        "gain_vs_uniform": -0.0001205509949495006,
+        "ci95": [
+          -0.0010721286837098653,
+          0.0007886139357020746
+        ],
+        "simultaneous_ci95": [
+          -0.0013445368435242781,
+          0.0011034348536252767
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k25",
+        "label": "Ventana 52 · K=25",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 25,
+        "validation_score": 0.16207651346797916,
+        "test_score": 0.16173100622170716,
+        "gain_vs_uniform": -0.001731006221707126,
+        "ci95": [
+          -0.0032051694176676855,
+          -1.5126734887784209e-05
+        ],
+        "simultaneous_ci95": [
+          -0.0038276276875097307,
+          0.00036561524409547876
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k100",
+        "label": "Ventana 52 · K=100",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 100,
+        "validation_score": 0.1606563061246233,
+        "test_score": 0.16051117443802063,
+        "gain_vs_uniform": -0.0005111744380205552,
+        "ci95": [
+          -0.001254863631318306,
+          0.0003490956209522912
+        ],
+        "simultaneous_ci95": [
+          -0.0015695866766154499,
+          0.0005472378005743394
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k300",
+        "label": "Ventana 52 · K=300",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 300,
+        "validation_score": 0.16018375268197713,
+        "test_score": 0.16012861255291272,
+        "gain_vs_uniform": -0.00012861255291267922,
+        "ci95": [
+          -0.00044849941148093623,
+          0.0002413810984608913
+        ],
+        "simultaneous_ci95": [
+          -0.0005849624493450939,
+          0.00032773734351973537
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win104_k100",
+        "label": "Ventana 104 · K=100",
+        "family": "window",
+        "window_or_halflife": 104,
+        "k": 100,
+        "validation_score": 0.16093073353021448,
+        "test_score": 0.16031829757249627,
+        "gain_vs_uniform": -0.00031829757249620956,
+        "ci95": [
+          -0.0014446391899657744,
+          0.0007170729363003248
+        ],
+        "simultaneous_ci95": [
+          -0.0017297088000991934,
+          0.001093113655106774
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k25",
+        "label": "Exponencial 13 · K=25",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 25,
+        "validation_score": 0.16066225677531437,
+        "test_score": 0.16085173082950194,
+        "gain_vs_uniform": -0.0008517308295019147,
+        "ci95": [
+          -0.0022340912705434215,
+          0.0004906277006008979
+        ],
+        "simultaneous_ci95": [
+          -0.0026195279112782546,
+          0.0009160662522744251
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k100",
+        "label": "Exponencial 13 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 100,
+        "validation_score": 0.16003706657198696,
+        "test_score": 0.16011955749954607,
+        "gain_vs_uniform": -0.0001195574995460351,
+        "ci95": [
+          -0.0006286806877672639,
+          0.00038538158593267235
+        ],
+        "simultaneous_ci95": [
+          -0.0007759762844396497,
+          0.0005368612853475795
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k300",
+        "label": "Exponencial 13 · K=300",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 300,
+        "validation_score": 0.15998502431803108,
+        "test_score": 0.16001751993499727,
+        "gain_vs_uniform": -1.751993499725007e-05,
+        "ci95": [
+          -0.00020814087688293483,
+          0.00016917853618967247
+        ],
+        "simultaneous_ci95": [
+          -0.0002628602202852502,
+          0.00022782035029075004
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm26_k100",
+        "label": "Exponencial 26 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 26,
+        "k": 100,
+        "validation_score": 0.1601700987448113,
+        "test_score": 0.16020698504918,
+        "gain_vs_uniform": -0.0002069850491799626,
+        "ci95": [
+          -0.0008417770704312442,
+          0.0003936163789384791
+        ],
+        "simultaneous_ci95": [
+          -0.0010240858795710827,
+          0.0006101157812111577
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm52_k100",
+        "label": "Exponencial 52 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 52,
+        "k": 100,
+        "validation_score": 0.16029554681477426,
+        "test_score": 0.16021986226476528,
+        "gain_vs_uniform": -0.00021986226476525194,
+        "ci95": [
+          -0.0009210538297376564,
+          0.00044275614574904113
+        ],
+        "simultaneous_ci95": [
+          -0.001134965749409222,
+          0.0006952412198787181
+        ],
+        "beats_uniform": false
+      }
+    ],
+    "pb_logloss": [
+      {
+        "key": "uniform",
+        "label": "Uniforme · referencia",
+        "family": "uniform",
+        "window_or_halflife": null,
+        "k": null,
+        "validation_score": 2.9957322735539904,
+        "test_score": 2.995732273553991,
+        "gain_vs_uniform": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "simultaneous_ci95": [
+          0.0,
+          0.0
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k25",
+        "label": "Toda la historia · K=25",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 25,
+        "validation_score": 3.0433779974868918,
+        "test_score": 3.017883183431969,
+        "gain_vs_uniform": -0.022150909877978003,
+        "ci95": [
+          -0.08446590335197297,
+          0.03487331598983944
+        ],
+        "simultaneous_ci95": [
+          -0.09931084749359062,
+          0.05500902773763461
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k100",
+        "label": "Toda la historia · K=100",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 100,
+        "validation_score": 3.0309018283829547,
+        "test_score": 3.011931438303743,
+        "gain_vs_uniform": -0.016199164749752294,
+        "ci95": [
+          -0.0680140494417783,
+          0.03195349387850321
+        ],
+        "simultaneous_ci95": [
+          -0.08070949268832943,
+          0.04831116318882485
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "all_k300",
+        "label": "Toda la historia · K=300",
+        "family": "all",
+        "window_or_halflife": null,
+        "k": 300,
+        "validation_score": 3.0154741816466912,
+        "test_score": 3.0043634825451204,
+        "gain_vs_uniform": -0.008631208991129602,
+        "ci95": [
+          -0.044609659288700844,
+          0.025002944892419814
+        ],
+        "simultaneous_ci95": [
+          -0.05369021349292736,
+          0.03642779551066815
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k25",
+        "label": "Ventana 13 · K=25",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 25,
+        "validation_score": 3.0922627544130146,
+        "test_score": 3.005363595081674,
+        "gain_vs_uniform": -0.009631321527683269,
+        "ci95": [
+          -0.12377004315120789,
+          0.1057694964233243
+        ],
+        "simultaneous_ci95": [
+          -0.15548143172792275,
+          0.13621878867255624
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k100",
+        "label": "Ventana 13 · K=100",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 100,
+        "validation_score": 3.014931383279166,
+        "test_score": 2.973528883551614,
+        "gain_vs_uniform": 0.022203390002376432,
+        "ci95": [
+          -0.01952150877364456,
+          0.06561118113024682
+        ],
+        "simultaneous_ci95": [
+          -0.032017551752963225,
+          0.07642433175771608
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win13_k300",
+        "label": "Ventana 13 · K=300",
+        "family": "window",
+        "window_or_halflife": 13,
+        "k": 300,
+        "validation_score": 3.00122029642174,
+        "test_score": 2.9838303714313588,
+        "gain_vs_uniform": 0.011901902122631907,
+        "ci95": [
+          -0.004194875781179469,
+          0.028599018515767727
+        ],
+        "simultaneous_ci95": [
+          -0.00922782023335868,
+          0.0330316244786225
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win26_k100",
+        "label": "Ventana 26 · K=100",
+        "family": "window",
+        "window_or_halflife": 26,
+        "k": 100,
+        "validation_score": 3.02311838087319,
+        "test_score": 2.9801836681226685,
+        "gain_vs_uniform": 0.015548605431322467,
+        "ci95": [
+          -0.03700325908458008,
+          0.06473707355400754
+        ],
+        "simultaneous_ci95": [
+          -0.04937160272540721,
+          0.08046881358805215
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k25",
+        "label": "Ventana 52 · K=25",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 25,
+        "validation_score": 3.0872890168595686,
+        "test_score": 3.085713054617624,
+        "gain_vs_uniform": -0.08998078106363341,
+        "ci95": [
+          -0.20749607619148577,
+          0.024279540736510445
+        ],
+        "simultaneous_ci95": [
+          -0.23864150528667022,
+          0.05867994315940339
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k100",
+        "label": "Ventana 52 · K=100",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 100,
+        "validation_score": 3.0176242489525813,
+        "test_score": 3.0162018898039937,
+        "gain_vs_uniform": -0.02046961625000256,
+        "ci95": [
+          -0.07432167078017189,
+          0.032187464565567675
+        ],
+        "simultaneous_ci95": [
+          -0.08848082658524838,
+          0.04754159408524326
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win52_k300",
+        "label": "Ventana 52 · K=300",
+        "family": "window",
+        "window_or_halflife": 52,
+        "k": 300,
+        "validation_score": 2.999957411484215,
+        "test_score": 2.999209786701244,
+        "gain_vs_uniform": -0.0034775131472534818,
+        "ci95": [
+          -0.026597115427556575,
+          0.01893655755661801
+        ],
+        "simultaneous_ci95": [
+          -0.03232762803589291,
+          0.02537260174138595
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "win104_k100",
+        "label": "Ventana 104 · K=100",
+        "family": "window",
+        "window_or_halflife": 104,
+        "k": 100,
+        "validation_score": 3.0236197749851206,
+        "test_score": 3.015970980015075,
+        "gain_vs_uniform": -0.020238706461084482,
+        "ci95": [
+          -0.08812399467815765,
+          0.034516531278538314
+        ],
+        "simultaneous_ci95": [
+          -0.09974496446266554,
+          0.059267551540496566
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k25",
+        "label": "Exponencial 13 · K=25",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 25,
+        "validation_score": 3.0500391463687624,
+        "test_score": 3.005654772225478,
+        "gain_vs_uniform": -0.00992249867148681,
+        "ci95": [
+          -0.09972509801654768,
+          0.08309932040638024
+        ],
+        "simultaneous_ci95": [
+          -0.12605429906830296,
+          0.10620930172532934
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k100",
+        "label": "Exponencial 13 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 100,
+        "validation_score": 3.0068664516403243,
+        "test_score": 2.9837645052715986,
+        "gain_vs_uniform": 0.01196776828239234,
+        "ci95": [
+          -0.02213427813065654,
+          0.046790869428934706
+        ],
+        "simultaneous_ci95": [
+          -0.032537477069152713,
+          0.0564730136339374
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm13_k300",
+        "label": "Exponencial 13 · K=300",
+        "family": "ewm",
+        "window_or_halflife": 13,
+        "k": 300,
+        "validation_score": 2.998730585971654,
+        "test_score": 2.9887579362114165,
+        "gain_vs_uniform": 0.006974337342574149,
+        "ci95": [
+          -0.006274094880197954,
+          0.020822512457663454
+        ],
+        "simultaneous_ci95": [
+          -0.010275071298084606,
+          0.024223745983232906
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm26_k100",
+        "label": "Exponencial 26 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 26,
+        "k": 100,
+        "validation_score": 3.00804245453411,
+        "test_score": 2.992872426113377,
+        "gain_vs_uniform": 0.002859847440614191,
+        "ci95": [
+          -0.03573916315703616,
+          0.04301406190773937
+        ],
+        "simultaneous_ci95": [
+          -0.04808937309334576,
+          0.05380906797457414
+        ],
+        "beats_uniform": false
+      },
+      {
+        "key": "ewm52_k100",
+        "label": "Exponencial 52 · K=100",
+        "family": "ewm",
+        "window_or_halflife": 52,
+        "k": 100,
+        "validation_score": 3.0147442975897594,
+        "test_score": 2.9970632165683817,
+        "gain_vs_uniform": -0.0013309430143907317,
+        "ci95": [
+          -0.04938772233301317,
+          0.044148543686141156
+        ],
+        "simultaneous_ci95": [
+          -0.06162089198392563,
+          0.05895900595514417
+        ],
+        "beats_uniform": false
+      }
+    ]
+  },
+  "interpretation": "Ganancia = error uniforme - error del modelo. Positivo mejora. IC95 simultáneos son exploratorios, con bootstrap por bloques y corrección por comparación de todos los modelos; no prueban sesgo físico ni garantizan ventaja futura."
+}

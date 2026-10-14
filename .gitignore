@@ -3,6 +3,10 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# Runtime state and secrets
+data/forecast_ledger.jsonl
 .env
 .env.*
-data/forecast_ledger.jsonl
+*.pem
+*.key

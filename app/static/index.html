@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Powerball Quant Lab | Investigación cuantitativa</title>
+  <meta name="description" content="Análisis histórico, Monte Carlo y evaluación walk-forward del Powerball australiano.">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="ambient one"></div><div class="ambient two"></div>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">P<span>•</span></span><span>POWERBALL <strong>QUANT LAB</strong></span></div>
+    <div class="topright"><span class="status" id="connection">● Conectando Python</span><span class="tiny pill">AUSTRALIA · 7/35 + 1/20</span></div>
+  </header>
+  <section class="hero">
+    <div class="eyebrow">RESEARCH TERMINAL <span class="microline"></span> v3.0 / PYTHON ENGINE · 2018–2026</div>
+    <div class="hero-grid">
+      <div><h1>¿Hay una señal real<br><em>en el azar?</em></h1>
+      <p>Analiza sorteos históricos, confronta distribuciones y valida hipótesis fuera de muestra. No basta con encontrar patrones: el objetivo es probar si anticipan algo.</p></div>
+      <div class="odds"><span>PROBABILIDAD DE JACKPOT · SORTEO JUSTO</span><strong>1 <small>en</small> 134.490.400</strong><div class="odds-caption">Igual para todas las combinaciones válidas</div></div>
+    </div>
+    <div class="notice"><span class="notice-icon">i</span><span>Un modelo que se ajusta mejor al pasado <strong>no implica</strong> números con más probabilidad real. Comparamos cualquier propuesta contra el modelo uniforme en datos posteriores.</span></div>
+  </section>
+  <div class="statgrid">
+    <div class="stat"><span>SORTEOS EN LA BASE</span><strong id="m-count">—</strong><small id="m-range">Cargando histórico</small></div>
+    <div class="stat"><span>PERÍODO DISPONIBLE</span><strong id="m-period">—</strong><small>Formato 7/35 · desde 19 abr. 2018</small></div>
+    <div class="stat"><span>MODELOS CLÁSICOS + NUEVOS</span><strong id="m-models">—</strong><small>Incluye la referencia uniforme</small></div>
+    <div class="stat"><span>JACKPOT EN 10.000 SORTEOS</span><strong>0,0074%</strong><small>Probabilidad de ≥1, modelo justo</small></div>
+  </div>
+  <nav class="tabs" aria-label="Módulos">
+    <button class="tab active" data-page="history">01 <b>Históricos</b></button>
+    <button class="tab" data-page="models">02 <b>Backtesting</b></button>
+    <button class="tab" data-page="test">03 <b>Pruebas estadísticas</b></button>
+    <button class="tab" data-page="simulation">04 <b>Monte Carlo</b></button>
+    <button class="tab" data-page="combinations">05 <b>Combinaciones</b></button>
+    <button class="tab" data-page="edge">06 <b>Predictive Edge</b></button>
+    <button class="tab" data-page="data">07 <b>Datos</b></button>
+  </nav>
+
+  <main>
+    <section id="page-history" class="page active">
+      <div class="section-head"><div><div class="eyebrow">01 / HISTÓRICOS</div><h2>Cómo se han distribuido los sorteos</h2><p>Conteo observado frente a la frecuencia esperada bajo una extracción uniforme.</p></div>
+        <label class="field">Período <select id="history-year"><option value="">Todos los años</option></select></label></div>
+      <div class="panelset">
+        <article class="panel large"><div class="panel-head"><div><h3>Los 35 números principales</h3><p>Frecuencia de aparición por número · esperado = 20% de los sorteos</p></div><div class="legend"><i class="c-aqua"></i> Observado <i class="c-muted"></i> Esperado</div></div><div id="main-chart" class="frequency-chart"></div></article>
+        <article class="panel"><div class="panel-head"><div><h3>Powerball · 1 a 20</h3><p>Esperado = 5% de los sorteos</p></div></div><div id="pb-chart" class="frequency-chart slim"></div></article>
+      </div>
+      <div class="panelset lower"><article class="panel"><h3>Distribución de las sumas</h3><p class="subline">Suma de los 7 números: historial vs. referencia Monte Carlo</p><div id="sum-chart" class="comparison-chart"></div></article>
+      <article class="panel"><h3>Repeticiones entre sorteos consecutivos</h3><p class="subline">Cuántos números aparecen en ambos sorteos</p><div id="overlap-chart" class="comparison-chart"></div><div id="overlap-note" class="micro-note"></div></article></div>
+      <article class="panel"><div class="panel-head"><div><h3>Últimos sorteos registrados</h3><p>Datos verificables, no predicciones</p></div><a href="/api/download" class="linkbtn">↓ CSV</a></div><div class="table-scroll"><table><thead><tr><th>Sorteo</th><th>Fecha</th><th>7 números principales</th><th>Powerball</th></tr></thead><tbody id="draw-table"></tbody></table></div></article>
+    </section>
+
+    <section id="page-models" class="page">
+      <div class="section-head"><div><div class="eyebrow">02 / VALIDACIÓN CUANTITATIVA</div><h2>¿Un modelo supera al azar?</h2><p>Predicción secuencial sin usar el sorteo que intentamos anticipar.</p></div><button id="refresh-backtest" class="outline">↻ Recalcular</button></div>
+      <div class="splitstats"><div class="panel"><span class="stat-label">AÑO DE SELECCIÓN</span><strong id="val-year">—</strong><small id="val-count">—</small></div><div class="panel"><span class="stat-label">AÑO DE PRUEBA POSTERIOR</span><strong id="test-year">—</strong><small id="test-count">—</small></div><div class="panel"><span class="stat-label">REFERENCIA BRIER PRINCIPALES</span><strong>0,160000</strong><small>Menor = mejor · uniforme</small></div></div>
+      <div class="panelset lower"><article class="panel"><h3>Modelo elegido con validación</h3><div id="chosen-main" class="chosen"></div></article><article class="panel"><h3>Modelo Powerball seleccionado</h3><div id="chosen-pb" class="chosen"></div></article></div>
+      <article class="panel lab-forest-panel">
+        <div class="panel-head forest-head"><div><div class="eyebrow">TODOS LOS MODELOS · MISMO HOLDOUT</div><h3>¿Quién realmente mejora al uniforme?</h3><p>Ganancia de error en el año de prueba. Derecha de cero = mejora; izquierda = empeora. Las líneas muestran intervalos de incertidumbre.</p></div>
+          <label class="field">Intervalo <select id="ci-select"><option value="simultaneous_ci95" selected>95% simultáneo · 16 comparaciones</option><option value="ci95">95% individual · exploratorio</option></select></label>
+        </div>
+        <div class="forest-legend"><span><i class="forest-swatch point"></i> Diferencia observada</span><span><i class="forest-swatch range"></i> Intervalo bootstrap</span><span class="forest-center-label">│ Cero = sin mejora</span></div>
+        <div id="model-forest" class="forest-chart" role="img" aria-label="Comparación de intervalos de confianza de los 17 modelos"></div>
+        <div class="forest-footer"><span id="forest-reading">Calculando intervalos de confianza…</span><span id="forest-scale"></span></div>
+        <p class="disclaimer">IC 95% obtenidos mediante bootstrap pareado circular por bloques de 4 sorteos; el intervalo simultáneo se calibra frente al máximo error estandarizado de los 16 modelos alternativos. Esta corrección reduce falsos hallazgos por explorar muchos modelos, pero no elimina sesgos de selección previos ni sustituye una validación prospectiva.</p>
+      </article>
+      <article class="panel"><div class="panel-head"><div><h3>Clasificación de modelos</h3><p>Ordenados por la métrica de validación elegida, no por los resultados del año de prueba.</p></div><label class="field">Métrica <select id="metric-select"><option value="brier">Principales · Brier</option><option value="pb_logloss">Powerball · Log-loss</option></select></label></div>
+        <div class="table-scroll"><table><thead><tr><th>Modelo</th><th>Parámetros</th><th>Validación</th><th>Prueba posterior</th><th>Δ vs. uniforme</th><th>IC 95% simultáneo</th></tr></thead><tbody id="model-table"></tbody></table></div>
+        <p class="disclaimer">La muestra posterior se muestra para auditoría. Nunca se utiliza para seleccionar hiperparámetros. Los resultados retrospectivos no garantizan capacidad predictiva futura.</p></article>
+      <article class="panel"><h3>Cómo se estima cada distribución</h3><div class="formula">P<sub>estimada</sub>(número i) = [frecuencia ponderada<sub>i</sub> + K × 0,20] / [sorteos ponderados + K]</div><p class="subline">K acerca cada número a su probabilidad marginal justa (20%). La Powerball se suaviza hacia el 5%. Se prueban ventanas de 13 a 104 sorteos, memoria exponencial y toda la historia. Los siete números se extraen sin reemplazo: sus apariciones no son independientes.</p></article>
+    </section>
+
+    <section id="page-test" class="page">
+      <div class="section-head"><div><div class="eyebrow">03 / CONTRASTE DE HIPÓTESIS</div><h2>¿Se desvía de una lotería justa?</h2><p>Pruebas globales que respetan el mecanismo 7 de 35, sin reemplazo, más 1 de 20.</p></div></div>
+      <article class="panel"><div class="fields"><label class="field">Período <select id="test-year-filter"><option value="">Todos los años</option></select></label><label class="field">Réplicas del modelo nulo<select id="test-reps"><option value="500">500 · rápida</option><option value="2000" selected>2.000 · recomendada</option><option value="5000">5.000 · precisión mayor</option></select></label><button id="run-tests" class="primary">▶ Ejecutar pruebas</button></div>
+        <div class="testgrid"><div class="testcard"><span>FRECUENCIAS · 35 NÚMEROS</span><strong id="p-main">—</strong><small>p-valor global Monte Carlo</small></div><div class="testcard"><span>EXTREMO MÁS ANÓMALO</span><strong id="p-max">—</strong><small>Corregido por buscar entre 35 números</small></div><div class="testcard"><span>POWERBALL · 20 VALORES</span><strong id="p-pb">—</strong><small>p-valor global Monte Carlo</small></div></div>
+        <div id="test-reading" class="interpretation">Ejecuta la prueba para obtener los resultados.</div>
+      </article>
+      <div class="panelset lower"><article class="panel"><h3>Por qué usamos simulación Monte Carlo</h3><p class="subline">Los 7 números de cada sorteo están relacionados porque no pueden repetirse dentro del mismo sorteo. Las simulaciones reconstruyen ese proceso y comparan la estadística observada con la distribución obtenida bajo la hipótesis justa.</p></article><article class="panel"><h3>Qué significa un valor p</h3><p class="subline">Un valor p pequeño señala una observación inusual bajo el modelo nulo; <strong>no</strong> demuestra por sí solo manipulación ni produce números ganadores. Un valor p alto tampoco certifica que el mecanismo sea perfecto.</p></article></div>
+    </section>
+
+    <section id="page-simulation" class="page">
+      <div class="section-head"><div><div class="eyebrow">04 / MONTE CARLO</div><h2>Simula miles de sorteos</h2><p>Selecciona una combinación y descubre la distribución de resultados sin confundirla con una predicción.</p></div></div>
+      <div class="panelset"><article class="panel"><div class="panel-head"><h3>Tu combinación</h3><button id="randomize-ticket" class="outline mini">↻ Aleatoria</button></div><div id="number-picker" class="picker"></div><div class="subline" id="selected-count">0 de 7 seleccionados</div>
+        <h4>Powerball</h4><div id="power-picker" class="picker power"></div>
+        <div class="fields compact"><label class="field">Sorteos a simular<select id="simulation-qty"><option value="1000">1.000</option><option value="10000" selected>10.000</option><option value="100000">100.000</option><option value="300000">300.000</option></select></label><button id="run-simulation" class="primary">▶ Simular</button></div></article>
+        <article class="panel"><h3>Resultado del experimento</h3><div id="sim-empty" class="empty"><div class="empty-symbol">◌</div><p>Ejecuta una simulación. El motor Python generará los sorteos con el mecanismo exacto del juego.</p></div><div id="sim-results" class="hidden"><div class="testgrid two"><div class="testcard"><span>PREMIOS EN LA MUESTRA</span><strong id="s-prizes">—</strong></div><div class="testcard"><span>JACKPOTS</span><strong id="s-jackpots">—</strong></div></div><h4>Por número de aciertos principales</h4><div id="hits-chart" class="comparison-chart"></div><h4>Premios por división</h4><div class="table-scroll"><table><thead><tr><th>División</th><th>Observado</th><th>Esperado</th></tr></thead><tbody id="div-table"></tbody></table></div><div id="sim-reading" class="micro-note"></div></div></article></div>
+    </section>
+
+    <section id="page-combinations" class="page">
+      <div class="section-head"><div><div class="eyebrow">05 / HIPÓTESIS EXPERIMENTALES</div><h2>Combinaciones según modelos</h2><p>Genera combinaciones a partir de una distribución estimada. Su ventaja predictiva <strong>no está demostrada</strong>.</p></div></div>
+      <div class="panelset"><article class="panel"><h3>Distribución para el siguiente sorteo</h3><div class="fields"><label class="field">Modelo<select id="ranking-model"></select></label><button id="generate-ticket" class="primary">Generar combinación</button></div>
+      <p class="subline">Un modelo estima probabilidades marginales históricas suavizadas. El generador utiliza esos valores como pesos relativos para una selección de 7 números sin reemplazo.</p><div id="ranking-chart" class="ranking-chart"></div></article>
+      <article class="panel"><h3>Combinación generada</h3><div id="ticket-result" class="empty"><div class="empty-symbol">◇</div><p>Selecciona un modelo y genera una combinación.</p></div><div class="fixed-warning">La probabilidad teórica del jackpot sigue siendo <strong>1 / 134.490.400</strong> para cualquier combinación, bajo un sorteo justo.</div></article></div>
+    </section>
+
+
+    <section id="page-edge" class="page">
+      <div class="section-head"><div><div class="eyebrow">06 / PREDICTIVE EDGE MONITOR · V3</div><h2>¿Hay una ventaja <em class="edge-accent">fuera de muestra?</em></h2>
+        <p>Modelo bayesiano con pooling aproximado, detector temporal y ensemble. Todo se evalúa contra el sorteo justo; los parámetros se seleccionan únicamente con el año anterior al holdout.</p></div>
+        <a href="/api/edge-export" class="linkbtn">↓ Exportar análisis JSON</a>
+      </div>
+      <div class="edge-kpis">
+        <div class="panel edge-kpi"><span>HOLDOUT</span><strong id="edge-years">—</strong><small id="edge-range">—</small></div>
+        <div class="panel edge-kpi"><span>DELTA BRIER · ENSEMBLE</span><strong id="edge-main-gain">—</strong><small>Positivo mejora · uniforme Brier 0,160000</small></div>
+        <div class="panel edge-kpi"><span>DELTA LOG-LOSS · POWERBALL</span><strong id="edge-pb-gain">—</strong><small>Positivo mejora · uniforme ln(20)</small></div>
+        <div class="panel edge-kpi"><span>RESULTADO ESTADÍSTICO</span><strong id="edge-verdict" class="verdict">—</strong><small>IC 95% simultáneos exploratorios</small></div>
+      </div>
+      <article class="panel">
+        <div class="panel-head"><div><h3>Comparativa de modelos avanzados</h3><p>Ganancia = error del uniforme − error del modelo; el test no se usa para ajustar hiperparámetros.</p></div>
+        <label class="field">Métrica <select id="edge-metric"><option value="brier">Números · Brier</option><option value="pb_logloss">Powerball · Log-loss</option></select></label></div>
+        <div id="edge-forest" class="forest-chart edge-forest"></div>
+        <div id="edge-reading" class="micro-note"></div>
+        <div class="table-scroll"><table><thead><tr><th>Modelo</th><th>Error test</th><th>Δ vs. uniforme</th><th>IC 95% simultáneo</th></tr></thead><tbody id="edge-table"></tbody></table></div>
+      </article>
+      <div class="panelset lower">
+        <article class="panel"><div class="panel-head"><div><h3>Ventaja acumulada · ensemble</h3><p>Secuencia cronológica del holdout: positivo = mejor que uniforme.</p></div></div><div id="edge-curve" class="edge-curve" role="img" aria-label="Evolución de la ventaja acumulada del ensemble"></div><div class="micro-note">La trayectoria histórica no garantiza que la tendencia continúe.</div></article>
+        <article class="panel"><h3>Ensemble dinámico</h3><p class="subline">El uniforme conserva al menos un 65% de peso. Los otros pesos se actualizan con errores anteriores al sorteo que se pronostica.</p><div id="edge-config" class="mini-cfg"></div><div id="edge-weights" class="weight-chart"></div></article>
+      </div>
+      <article class="panel">
+        <div class="panel-head"><div><h3>Probabilidades estimadas · próximo sorteo</h3><p>Intervalos marginales Beta con una prior fija K=100 (no del estimador Bayes empírico). No corrigen múltiples comparaciones ni demuestran probabilidades físicas.</p></div>
+        <label class="field">Distribución <select id="edge-prob-type"><option value="main">35 principales</option><option value="pb">20 Powerball</option></select></label></div>
+        <p class="subline" id="edge-target">—</p><div id="edge-heatmap" class="edge-heatmap"></div><div class="edge-key"><i></i> Mayor peso del ensemble <span>•</span> Referencia: 20% principal / 5% Powerball</div>
+        <div id="edge-top" class="table-scroll"></div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head"><div><h3>Comparador experimental de combinaciones</h3><p>Una combinación elegida uniformemente y otra muestreada según los pesos estimados del ensemble. Ambas tienen exactamente la misma probabilidad teórica de jackpot si el sorteo es justo.</p></div><button class="primary" id="edge-pick">↻ Generar comparación</button></div>
+        <div id="edge-tickets" class="edge-ticketpair"><div class="micro-note">Genera un par de combinaciones para comparar el método de selección; no representa una señal de compra.</div></div>
+      </article>
+      <div class="panelset lower">
+        <article class="panel"><h3>Estabilidad temporal · cambio de régimen</h3><p class="subline">Busca el punto de ruptura más marcado y lo compara con permutaciones de todo el histórico. Corrige por buscar entre todas las fechas y entre las dos familias de números.</p>
+          <div class="fields"><label class="field">Permutaciones<select id="regime-reps"><option value="200">200</option><option value="450" selected>450</option><option value="1200">1.200</option></select></label><button class="primary" id="regime-run">Ejecutar detector</button></div>
+          <div id="regime-result" class="micro-note">Sin ejecutar; el análisis no utiliza el resultado para optimizar predicciones retroactivamente.</div>
+        </article>
+        <article class="panel"><h3>Prueba placebo · sorteo justo</h3><p class="subline">Genera historiales completamente uniformes y repite el ajuste de parámetros y la selección del mejor modelo avanzado, para estimar qué tan inusual sería la ventaja observada.</p>
+          <div class="fields"><label class="field">Réplica de experimentos<select id="null-reps"><option value="50">50 · rápida</option><option value="100" selected>100 · recomendada</option><option value="200">200 · más precisa</option></select></label><button class="primary" id="null-run">Ejecutar placebos</button></div>
+          <div id="null-result" class="micro-note">La prueba puede tardar de unos segundos a cerca de un minuto. En servidores públicos, requiere token de administración (pestaña Datos).</div>
+        </article>
+      </div>
+      <article class="panel">
+        <div class="panel-head"><div><h3>Predicciones selladas · auditoría futura</h3><p>Guarda la distribución calculada ANTES del próximo sorteo en un registro apend-only con fecha UTC y SHA-256. Una vez publicado el resultado en la base, evalúa la predicción sin recalcularla.</p></div><button class="outline" id="ledger-reload">↻ Ver registro</button></div>
+        <div class="fields"><button class="primary" id="ledger-lock">Sellar predicción del siguiente sorteo</button><span class="micro-note">Escritura restringida a localhost o token de administración (pestaña Datos)</span></div>
+        <div class="table-scroll"><table><thead><tr><th>Sorteo objetivo</th><th>Registrado (UTC)</th><th>Estado</th><th>Brier al resolver</th><th>SHA-256 (prefijo)</th></tr></thead><tbody id="ledger-table"><tr><td colspan="5">Sin predicciones selladas.</td></tr></tbody></table></div>
+        <p class="disclaimer">El archivo local acredita lo que se guardó en esta instalación, pero no es un sellado externo de tiempo inalterable ni constituye una prueba antifraude. Las predicciones de la fecha del sorteo se bloquean para evitar registros retrospectivos.</p>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head"><div><h3>Dependencias y coocurrencias · 595 pares</h3><p>Entre todos los pares posibles de números principales, buscamos los 12 más extremos y calculamos una significancia global corregida por seleccionar el más extremo.</p></div><button class="outline" id="pair-run">▶ Evaluar pares</button></div>
+        <div class="fields"><label class="field">Simulaciones de referencia<select id="pair-reps"><option value="250">250</option><option value="1000" selected>1.000</option><option value="3000">3.000</option></select></label><span class="micro-note">Requiere token en servidores públicos.</span></div>
+        <div id="pair-summary" class="micro-note">Sin ejecutar. Un par que apareció más veces no es necesariamente más probable en el próximo sorteo.</div>
+        <div id="pair-table" class="table-scroll"></div>
+      </article>
+      <article class="panel"><h3>Calibración marginal</h3><p class="subline">Para los 35 números principales, los pronósticos del ensemble se agrupan por quintiles de probabilidad estimada. Comparación de su promedio predicho y frecuencia observada en los sorteos de prueba.</p><div id="edge-calibration" class="calibration-chart"></div>
+        <p class="disclaimer">Ninguna cifra en este panel modifica la probabilidad legal/teórica del jackpot para un sorteo justo. Datos 2018–2026 sujetos a cotejo registro por registro contra el operador oficial.</p></article>
+    </section>
+
+    <section id="page-data" class="page">
+      <div id="storage-warning" class="fixed-warning" style="display:none"></div>
+      <div class="section-head"><div><div class="eyebrow">07 / FUENTES Y ACTUALIZACIÓN</div><h2>Base histórica verificable</h2><p>Histórico importado desde abril de 2018. Los registros se validan y no se reemplazan ante conflictos.</p></div></div>
+      <label class="field" style="max-width:400px;margin-bottom:16px">Token de administración (si está configurado en el servidor)<input id="admin-token" type="password" placeholder="Opcional en ejecución local" autocomplete="off" style="background:var(--panel2);color:white;border:1px solid #405266;border-radius:9px;padding:11px"></label><div class="panelset"><article class="panel"><h3>Actualizar archivos desde la web</h3><p class="subline">Intenta leer los archivos públicos anuales de Powerball Australia. Requiere internet desde el servidor y que el formato del sitio siga siendo compatible.</p><div class="fields"><label class="field">Desde el año <select id="update-from"><option value="2018">2018 · inicio formato vigente</option><option value="2022">2022</option><option value="2024">2024</option><option value="2026">2026</option></select></label><button id="update-data" class="primary">↻ Actualizar históricos</button></div><pre id="update-log" class="log">Todavía no se ha intentado la actualización.</pre></article>
+        <article class="panel"><h3>Importar datos de otra fuente</h3><p class="subline">Importa un CSV con las columnas <code>draw,date,n1,n2,n3,n4,n5,n6,n7,powerball</code>. Se validan rango, fechas, duplicados y reglas desde abril de 2018.</p><label class="upload" for="csv-upload">↑ Elegir archivo CSV <input type="file" id="csv-upload" accept=".csv,text/csv"></label><button id="upload-data" class="outline">Validar e importar</button><p id="upload-log" class="micro-note"></p><a href="/api/download" class="linkbtn">↓ Descargar base actual</a></article></div>
+      <div class="panel"><h3>Auditoría técnica del histórico</h3><div id="audit-info" class="micro-note">Cargando auditoría…</div></div><div class="panel"><h3>Fuentes y limitaciones</h3><p class="subline"><a href="https://www.lotterywest.wa.gov.au/lotterywest/media-centre/powerball-to-deliver-more-winners-and-bigger-jackpots" target="_blank" rel="noopener">Lotterywest</a> documenta el cambio de reglas del 19 de abril de 2018. Los datos incorporados se transcribieron de archivos secundarios de <a href="https://www.powerball.net/australia/archive/2026" target="_blank" rel="noopener">Powerball.net, archivo de resultados</a>. No se verificó cada registro contra el operador oficial; se recomienda cotejar antes de decisiones económicas. El último sorteo en la base es <b id="source-last">08-10-2026</b> y puede quedar desactualizado. Los archivos remotos pueden cambiar y el servidor puede no tener internet; por eso existe la importación CSV. Los archivos públicos históricos se usan para investigación descriptiva, no como garantía de futuros resultados.</p></div>
+    </section>
+  </main>
+  <footer>POWERBALL QUANT LAB <span>•</span> Investigación estadística · Python + FastAPI <span>•</span> Sin promesas de ganancias</footer>
+</div>
+<div id="toast" class="toast" aria-live="polite"></div>
+<script src="/static/app.js" defer></script>
+</body></html>

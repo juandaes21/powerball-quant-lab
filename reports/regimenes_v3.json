@@ -1,0 +1,19 @@
+{
+  "n": 443,
+  "reps": 1500,
+  "main": {
+    "stat": 48.50987425033307,
+    "split_index": 185,
+    "first_after_split": "2021-11-04",
+    "p_value": 0.5562958027981346,
+    "p_adjusted_2tests": 1.0
+  },
+  "powerball": {
+    "stat": 30.710962616380435,
+    "split_index": 226,
+    "first_after_split": "2022-08-18",
+    "p_value": 0.5376415722851432,
+    "p_adjusted_2tests": 1.0
+  },
+  "interpretation": "Permutar la secuencia de sorteos enteros mantiene frecuencias y coocurrencias y calibra la búsqueda del mejor punto de cambio; prueba estabilidad temporal (no uniformidad), con Bonferroni para dos familias. Fechas candidatas no demuestran cambios físicos."
+}
